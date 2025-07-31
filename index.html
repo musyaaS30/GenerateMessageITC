@@ -1,613 +1,97 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto Message Eskul ITC</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <title>ITC Auto Message - Loading</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
+            margin: 0;
+            padding: 0;
             font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
-
-        .catatan-btn.active {
-            background-color: #2563eb;
+        
+        .splash-container {
+            text-align: center;
             color: white;
-            border-color: #2563eb;
+            animation: fadeIn 0.8s ease-out;
         }
-
-        .form-section {
-            transition: all 0.3s ease;
+        
+        .logo {
+            width: 120px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
         }
-
-        .fade-in {
-            animation: fadeIn 0.3s ease-in;
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
         }
-
+        
+        p {
+            font-size: 1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .loading-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 0 auto;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .loading-progress {
+            height: 100%;
+            width: 0%;
+            background: white;
+            border-radius: 2px;
+            animation: loading 2s ease-in-out forwards;
+        }
+        
+        @keyframes loading {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .input-highlight {
-            transition: all 0.2s ease;
-        }
-
-        .input-highlight:focus {
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
-
-<body class="bg-gray-50 min-h-screen">
-    <div class="container mx-auto px-4 py-8">
-        <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-            <!-- Header dengan gradient -->
-            <div class="bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-5">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h1 class="text-2xl font-bold text-white">ITC Auto Message</h1>
-                        <p class="text-blue-100 text-sm">Generator Pesan WhatsApp Otomatis</p>
-                    </div>
-                    <div class="p-2 rounded-lg">
-                        <img class="w-20" src="semecha3.png" alt="">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Navigation Tabs -->
-            <div class="border-b border-gray-200">
-                <nav class="flex">
-                    <button id="btn-masuk"
-                        class="flex-1 py-3 px-4 text-center font-medium text-blue-600 border-b-2 border-blue-600">
-                        <i class="fas fa-calendar-check mr-2"></i>Eskul Masuk
-                    </button>
-                    <button id="btn-libur"
-                        class="flex-1 py-3 px-4 text-center font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700">
-                        <i class="fas fa-calendar-times mr-2"></i>Eskul Libur
-                    </button>
-                </nav>
-            </div>
-
-            <!-- Form Input -->
-            <div class="p-6">
-                <!-- Form Eskul Masuk -->
-                <div id="form-masuk" class="form-section space-y-5">
-                    <!-- Tanggal Kegiatan -->
-                    <div class="space-y-1">
-                        <label for="tanggal" class="block text-sm font-medium text-gray-700">
-                            <i class="far fa-calendar-alt mr-2 text-blue-500"></i>Tanggal Kegiatan
-                        </label>
-                        <div class="relative">
-                            <input type="date" id="tanggal"
-                                class="input-highlight w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
-                            <i class="fas fa-calendar-day absolute right-3 top-3 text-gray-400"></i>
-                        </div>
-                    </div>
-
-                    <!-- Waktu Kegiatan -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="space-y-1">
-                            <label for="waktu-mulai" class="block text-sm font-medium text-gray-700">
-                                <i class="far fa-clock mr-2 text-blue-500"></i>Waktu Mulai
-                            </label>
-                            <div class="relative">
-                                <input type="time" id="waktu-mulai"
-                                    class="input-highlight w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
-                                <i class="fas fa-play absolute right-3 top-3 text-gray-400"></i>
-                            </div>
-                        </div>
-                        <div class="space-y-1">
-                            <label for="waktu-selesai" class="block text-sm font-medium text-gray-700">
-                                <i class="far fa-clock mr-2 text-blue-500"></i>Waktu Selesai
-                            </label>
-                            <div class="relative">
-                                <input type="time" id="waktu-selesai"
-                                    class="input-highlight w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
-                                <i class="fas fa-stop absolute right-3 top-3 text-gray-400"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Peserta -->
-                    <div class="space-y-1">
-                        <label for="peserta" class="block text-sm font-medium text-gray-700">
-                            <i class="fas fa-users mr-2 text-blue-500"></i>Peserta
-                        </label>
-                        <input type="text" id="peserta"
-                            class="input-highlight w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
-                            value="untuk kelas 10 dan juga terbuka untuk kelas 11 yang ingin mempersiapkan USK">
-                    </div>
-
-                    <!-- Lokasi Divisi -->
-                    <div class="space-y-3">
-                        <label class="block text-sm font-medium text-gray-700">
-                            <i class="fas fa-map-marker-alt mr-2 text-blue-500"></i>Lokasi Divisi
-                        </label>
-                        <div class="space-y-3">
-                            <div>
-                                <label for="lokasi-web" class="block text-xs font-medium text-gray-500 mb-1">Web
-                                    Development</label>
-                                <div class="relative">
-                                    <input type="text" id="lokasi-web"
-                                        class="input-highlight w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                        value="Kelas RPL 1 - Lantai 3">
-                                    <i class="fas fa-laptop-code absolute right-3 top-3 text-gray-400"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <label for="lokasi-devisi"
-                                    class="block text-xs font-medium text-gray-500 mb-1">Design & UI/UX</label>
-                                <div class="relative">
-                                    <input type="text" id="lokasi-devisi"
-                                        class="input-highlight w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                        value="Kelas RPL 2 - Lantai 3">
-                                    <i class="fas fa-code absolute right-3 top-3 text-gray-400"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <label for="lokasi-robotik"
-                                    class="block text-xs font-medium text-gray-500 mb-1">Robotik</label>
-                                <div class="relative">
-                                    <input type="text" id="lokasi-robotik"
-                                        class="input-highlight w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                        value="Lab Robotik - Lantai 1">
-                                    <i class="fas fa-robot absolute right-3 top-3 text-gray-400"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Catatan -->
-                    <div class="space-y-3">
-                        <label class="block text-sm font-medium text-gray-700">
-                            <i class="fas fa-sticky-note mr-2 text-blue-500"></i>Template Catatan
-                        </label>
-                        <div class="flex flex-wrap gap-2 mb-2">
-                            <button
-                                data-catatan="Menggunakan pakaian bebas, tapi pastikan tetap terlihat sopan dan menghargai suasana."
-                                class="catatan-btn px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-medium border border-gray-200 transition-all">
-                                <i class="fas fa-tshirt mr-1"></i>Pakaian
-                            </button>
-                            <button
-                                data-catatan="Sebelum pulang, mohon pastikan kelas sudah dirapikan kembali seperti semula ya. Jangan lupa juga untuk saling mengingatkan, terutama bagi para mentor. Terima kasih 😊"
-                                class="catatan-btn px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-medium border border-gray-200 transition-all">
-                                <i class="fas fa-broom mr-1"></i>Kebersihan
-                            </button>
-                            <button
-                                data-catatan="Bagi yang belum mengumpulkan tugas minggu lalu, mohon segera diselesaikan dan dikumpulkan besok. Jangan lupa bawa laptop dan perlengkapan lainnya."
-                                class="catatan-btn px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-medium border border-gray-200 transition-all">
-                                <i class="fas fa-tasks mr-1"></i>Tugas
-                            </button>
-                            <button
-                                data-catatan="Jangan lupa membawa peralatan praktikum sesuai dengan divisi masing-masing. Pastikan semua dalam kondisi baik dan siap digunakan."
-                                class="catatan-btn px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-medium border border-gray-200 transition-all">
-                                <i class="fas fa-tools mr-1"></i>Perlengkapan
-                            </button>
-                            <button
-                                data-catatan="Bagi yang terlambat lebih dari 15 menit tidak diperkenankan masuk dan dianggap absen. Mohon datang tepat waktu."
-                                class="catatan-btn px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-medium border border-gray-200 transition-all">
-                                <i class="fas fa-clock mr-1"></i>Ketepatan Waktu
-                            </button>
-                        </div>
-                        <label for="catatan" class="block text-sm font-medium text-gray-700">Catatan Tambahan</label>
-                        <textarea id="catatan" rows="4"
-                            class="input-highlight w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">Buat teman-teman kelas 11 yang PKL-nya libur hari Sabtu dan ingin ikut hadir, silakan datang untuk menyiapkan USK.</textarea>
-                    </div>
-                </div>
-
-                <!-- Form Eskul Libur -->
-                <div id="form-libur" class="form-section space-y-5 hidden">
-                    <!-- Tanggal Libur -->
-                    <div class="space-y-1">
-                        <label for="tanggal-libur" class="block text-sm font-medium text-gray-700">
-                            <i class="far fa-calendar-alt mr-2 text-blue-500"></i>Tanggal Libur
-                        </label>
-                        <div class="relative">
-                            <input type="date" id="tanggal-libur"
-                                class="input-highlight w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
-                            <i class="fas fa-calendar-day absolute right-3 top-3 text-gray-400"></i>
-                        </div>
-                    </div>
-
-                    <!-- Salam Waktu -->
-                    <div class="space-y-1">
-                        <label class="block text-sm font-medium text-gray-700">
-                            <i class="far fa-sun mr-2 text-blue-500"></i>Salam Waktu
-                        </label>
-                        <div class="grid grid-cols-4 gap-2">
-                            <button data-waktu="pagi"
-                                class="waktu-btn px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium border border-gray-200 flex flex-col items-center">
-                                <i class="fas fa-sun text-yellow-400 mb-1"></i>
-                                <span>Pagi</span>
-                            </button>
-                            <button data-waktu="siang"
-                                class="waktu-btn px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium border border-gray-200 flex flex-col items-center">
-                                <i class="fas fa-sun text-yellow-500 mb-1"></i>
-                                <span>Siang</span>
-                            </button>
-                            <button data-waktu="sore"
-                                class="waktu-btn px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium border border-gray-200 flex flex-col items-center">
-                                <i class="fas fa-cloud-sun text-orange-500 mb-1"></i>
-                                <span>Sore</span>
-                            </button>
-                            <button data-waktu="malam"
-                                class="waktu-btn px-3 py-2 bg-blue-100 text-blue-700 rounded-lg text-sm font-medium border border-blue-200 flex flex-col items-center">
-                                <i class="fas fa-moon text-blue-500 mb-1"></i>
-                                <span>Malam</span>
-                            </button>
-                        </div>
-                        <input type="hidden" id="waktu-salam" value="malam">
-                    </div>
-
-                    <!-- Alasan Libur -->
-                    <div class="space-y-1">
-                        <label for="alasan-libur" class="block text-sm font-medium text-gray-700">
-                            <i class="fas fa-info-circle mr-2 text-blue-500"></i>Alasan Libur (Opsional)
-                        </label>
-                        <input type="text" id="alasan-libur"
-                            class="input-highlight w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
-                            placeholder="Contoh: Karena ada acara sekolah">
-                    </div>
-
-                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <i class="fas fa-info-circle text-blue-500 mt-1"></i>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-blue-800">Tips</h3>
-                                <div class="mt-2 text-sm text-blue-700">
-                                    <p>Isi alasan libur jika ada informasi khusus yang perlu disampaikan kepada anggota
-                                        eskul.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Generate Button -->
-                <button id="btn-generate"
-                    class="mt-6 w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all transform hover:scale-[1.01] shadow-md">
-                    <i class="fas fa-magic mr-2"></i>Generate Pesan
-                </button>
-            </div>
-
-            <!-- Hasil Pesan -->
-            <div id="hasil-pesan" class="border-t border-gray-200 p-6 hidden fade-in">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold text-gray-800 flex items-center">
-                        <i class="fas fa-envelope-open-text text-blue-500 mr-2"></i>Hasil Pesan
-                    </h2>
-                    <div class="flex space-x-2">
-                        <button id="btn-copy"
-                            class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 flex items-center text-sm font-medium transition-all">
-                            <i class="far fa-copy mr-1.5"></i>Salin
-                        </button>
-                        <button id="btn-clear"
-                            class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 flex items-center text-sm font-medium transition-all">
-                            <i class="fas fa-redo mr-1.5"></i>Reset
-                        </button>
-                    </div>
-                </div>
-                <div id="pesan-output"
-                    class="bg-gray-50 p-4 rounded-lg whitespace-pre-wrap text-sm font-mono border border-gray-200 max-h-96 overflow-y-auto">
-                </div>
-                <div class="mt-4 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
-                    <a id="btn-wa" href="#" target="_blank"
-                        class="flex-1 px-4 py-2.5 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 flex items-center justify-center transition-all">
-                        <i class="fab fa-whatsapp mr-2 text-lg"></i>Kirim ke Grup WhatsApp
-                    </a>
-                    <a id="btn-telegram" href="#" target="_blank"
-                        class="flex-1 px-4 py-2.5 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 flex items-center justify-center transition-all">
-                        <i class="fab fa-telegram mr-2 text-lg"></i>Kirim ke Telegram
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="mt-6 text-center text-sm text-gray-500">
-            <p>ITC Auto Message Generator © 2025 - Dibuat oleh Musyahadat Safitrah</p>
+<body>
+    <div class="splash-container">
+        <img src="semecha3.png" alt="ITC Logo" class="logo">
+        <h1>ITC Auto Message</h1>
+        <p>Generator Pesan WhatsApp Otomatis</p>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const btnMasuk = document.getElementById('btn-masuk');
-            const btnLibur = document.getElementById('btn-libur');
-            const formMasuk = document.getElementById('form-masuk');
-            const formLibur = document.getElementById('form-libur');
-            const btnGenerate = document.getElementById('btn-generate');
-            const hasilPesan = document.getElementById('hasil-pesan');
-            const pesanOutput = document.getElementById('pesan-output');
-            const btnCopy = document.getElementById('btn-copy');
-            const btnClear = document.getElementById('btn-clear');
-            const btnWa = document.getElementById('btn-wa');
-            const btnTelegram = document.getElementById('btn-telegram');
-            const catatanInput = document.getElementById('catatan');
-            const waktuSalamInput = document.getElementById('waktu-salam');
-
-            // Set tanggal default ke besok
-            const today = new Date();
-            const tomorrow = new Date(today);
-            tomorrow.setDate(today.getDate() + 1);
-
-            const formatDate = (date) => {
-                const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-                const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-
-                const dayName = days[date.getDay()];
-                const dateNum = date.getDate();
-                const monthName = months[date.getMonth()];
-                const year = date.getFullYear();
-
-                return `${dayName}, ${dateNum} ${monthName} ${year}`;
-            };
-
-            const formatTime = (timeString) => {
-                const [hours, minutes] = timeString.split(':');
-                return `${hours}.${minutes}`;
-            };
-
-            const getSalamWaktu = (waktu) => {
-                const salam = {
-                    'pagi': 'Selamat pagi',
-                    'siang': 'Selamat siang',
-                    'sore': 'Selamat sore',
-                    'malam': 'Selamat malam'
-                };
-                return salam[waktu] || 'Selamat malam';
-            };
-
-            // Set default date inputs
-            document.getElementById('tanggal').valueAsDate = tomorrow;
-            document.getElementById('tanggal-libur').valueAsDate = tomorrow;
-
-            // Set default time (10:00 - 12:00)
-            document.getElementById('waktu-mulai').value = '10:00';
-            document.getElementById('waktu-selesai').value = '12:00';
-
-            // Handle template catatan buttons
-            document.querySelectorAll('.catatan-btn').forEach(button => {
-                button.addEventListener('click', function () {
-                    const catatan = this.getAttribute('data-catatan');
-                    const currentValue = catatanInput.value;
-
-                    if (currentValue.includes(catatan)) {
-                        // Jika sudah ada, hapus catatan tersebut
-                        const newValue = currentValue.replace(catatan, '').replace(/\n\n+/g, '\n\n').trim();
-                        catatanInput.value = newValue;
-                        this.classList.remove('active');
-                        return;
-                    }
-
-                    // Tambahkan catatan baru dengan baris baru jika sudah ada isinya
-                    catatanInput.value = currentValue
-                        ? `${currentValue}\n\n${catatan}`
-                        : catatan;
-
-                    // Toggle active state
-                    document.querySelectorAll('.catatan-btn').forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                });
-            });
-
-            // Handle waktu salam buttons
-            document.querySelectorAll('.waktu-btn').forEach(button => {
-                button.addEventListener('click', function () {
-                    const waktu = this.getAttribute('data-waktu');
-                    waktuSalamInput.value = waktu;
-
-                    // Update button styles
-                    document.querySelectorAll('.waktu-btn').forEach(btn => {
-                        btn.classList.remove('bg-blue-100', 'text-blue-700', 'border-blue-200');
-                        btn.classList.add('bg-gray-100', 'text-gray-700', 'border-gray-200');
-                    });
-
-                    this.classList.remove('bg-gray-100', 'text-gray-700', 'border-gray-200');
-                    this.classList.add('bg-blue-100', 'text-blue-700', 'border-blue-200');
-                });
-            });
-
-            // Toggle form
-            btnMasuk.addEventListener('click', function () {
-                formMasuk.classList.remove('hidden');
-                formLibur.classList.add('hidden');
-                hasilPesan.classList.add('hidden');
-
-                // Update button styles
-                btnMasuk.classList.add('border-blue-600', 'text-blue-600');
-                btnLibur.classList.remove('border-blue-600', 'text-blue-600');
-                btnLibur.classList.add('border-transparent', 'text-gray-500');
-            });
-
-            btnLibur.addEventListener('click', function () {
-                formLibur.classList.remove('hidden');
-                formMasuk.classList.add('hidden');
-                hasilPesan.classList.add('hidden');
-
-                // Update button styles
-                btnLibur.classList.add('border-blue-600', 'text-blue-600');
-                btnLibur.classList.remove('border-transparent', 'text-gray-500');
-                btnMasuk.classList.remove('border-blue-600', 'text-blue-600');
-                btnMasuk.classList.add('border-transparent', 'text-gray-500');
-            });
-
-            // Generate message
-            btnGenerate.addEventListener('click', function () {
-                // Add loading effect
-                const originalText = btnGenerate.innerHTML;
-                btnGenerate.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Memproses...';
-                btnGenerate.disabled = true;
-
-                setTimeout(() => {
-                    if (!formLibur.classList.contains('hidden')) {
-                        // Form Libur
-                        const tanggalInput = document.getElementById('tanggal-libur');
-                        const waktuSalam = waktuSalamInput.value;
-                        const alasanLibur = document.getElementById('alasan-libur').value;
-
-                        if (!tanggalInput.value) {
-                            alert('Harap isi field tanggal libur!');
-                            btnGenerate.innerHTML = originalText;
-                            btnGenerate.disabled = false;
-                            return;
-                        }
-
-                        const tanggal = new Date(tanggalInput.value);
-                        const hariTanggal = formatDate(tanggal);
-                        const salam = getSalamWaktu(waktuSalam);
-
-                        const alasanText = alasanLibur ? `\nAlasan: ${alasanLibur}\n` : '\n';
-
-                        const message = `🔔 *PEMBERITAHUAN* 🔔
-
-🖇 *Assalamualaikum wrb.* ${salam} semua, maaf mengganggu waktunya. Kami ingin menginformasikan bahwa besok, *${hariTanggal}*, eskul ITC *DILIBURKAN*.${alasanText}
-Mohon diperhatikan agar tidak ada yang datang ke sekolah untuk eskul. Jika ada informasi tambahan atau perubahan jadwal selanjutnya, akan segera kami sampaikan.
-
-Terima kasih atas perhatiannya. Selamat menikmati waktu libur! 🙌🏻
-
-🔖 *Wassalamualaikum wrb*`;
-
-                        pesanOutput.textContent = message;
-                        updateWhatsAppLink(message);
-                        updateTelegramLink(message);
-
-                    } else {
-                        // Form Masuk
-                        const tanggalInput = document.getElementById('tanggal');
-                        const waktuMulai = document.getElementById('waktu-mulai').value;
-                        const waktuSelesai = document.getElementById('waktu-selesai').value;
-                        const peserta = document.getElementById('peserta').value;
-                        const lokasiWeb = document.getElementById('lokasi-web').value;
-                        const lokasiDevisi = document.getElementById('lokasi-devisi').value;
-                        const lokasiRobotik = document.getElementById('lokasi-robotik').value;
-                        const catatan = document.getElementById('catatan').value;
-
-                        if (!tanggalInput.value || !waktuMulai || !waktuSelesai || !peserta || !lokasiWeb || !lokasiDevisi || !lokasiRobotik) {
-                            alert('Harap isi semua field wajib!');
-                            btnGenerate.innerHTML = originalText;
-                            btnGenerate.disabled = false;
-                            return;
-                        }
-
-                        const tanggal = new Date(tanggalInput.value);
-                        const hariTanggal = formatDate(tanggal);
-                        const waktu = `Pukul ${formatTime(waktuMulai)} - ${formatTime(waktuSelesai)} WIB`;
-
-                        const message = `🖇 *Assalamualaikum wr. wb.*
-*Selamat malam* semuanya, mohon maaf mengganggu waktunya 🙏
-
-Kami ingin menginformasikan bahwa besok, *${hariTanggal}*, kegiatan ekstrakurikuler ITC akan dilaksanakan *${peserta}*, dengan detail sebagai berikut:
-
-📆 *Hari/Tanggal:* ${hariTanggal}
-⏰ *Waktu:* ${waktu}
-🏫 *Lokasi:*
-- *Web Development:* ${lokasiWeb}
-- *Devisi:* ${lokasiDevisi}
-- *Robotik:* ${lokasiRobotik}
-
-📌 *Catatan:*
-${catatan}
-
-Terima kasih atas perhatian dan kerja samanya.
-
-🔖 *Wassalamualaikum wr. wb*`;
-
-                        pesanOutput.textContent = message;
-                        updateWhatsAppLink(message);
-                        updateTelegramLink(message);
-                    }
-
-                    hasilPesan.classList.remove('hidden');
-                    btnGenerate.innerHTML = originalText;
-                    btnGenerate.disabled = false;
-
-                    // Scroll to hasil pesan
-                    hasilPesan.scrollIntoView({ behavior: 'smooth' });
-                }, 500);
-            });
-
-            // Copy message
-            btnCopy.addEventListener('click', function () {
-                const textToCopy = pesanOutput.textContent;
-                navigator.clipboard.writeText(textToCopy).then(function () {
-                    btnCopy.innerHTML = '<i class="fas fa-check mr-1.5"></i>Tersalin!';
-                    setTimeout(function () {
-                        btnCopy.innerHTML = '<i class="far fa-copy mr-1.5"></i>Salin';
-                    }, 2000);
-                });
-            });
-
-            // Clear form
-            btnClear.addEventListener('click', function () {
-                if (confirm('Apakah Anda yakin ingin mereset form?')) {
-                    if (!formLibur.classList.contains('hidden')) {
-                        document.getElementById('tanggal-libur').valueAsDate = tomorrow;
-                        document.getElementById('alasan-libur').value = '';
-                    } else {
-                        document.getElementById('tanggal').valueAsDate = tomorrow;
-                        document.getElementById('waktu-mulai').value = '10:00';
-                        document.getElementById('waktu-selesai').value = '12:00';
-                        document.getElementById('catatan').value = 'Buat teman-teman kelas 11 yang PKL-nya libur hari Sabtu dan ingin ikut hadir, silakan datang untuk menyiapkan USK.';
-
-                        // Reset catatan buttons
-                        document.querySelectorAll('.catatan-btn').forEach(btn => {
-                            btn.classList.remove('active');
-                        });
-                    }
-
-                    hasilPesan.classList.add('hidden');
-                }
-            });
-
-            // Update WhatsApp link
-            function updateWhatsAppLink(message) {
-                const encodedMessage = encodeURIComponent(message);
-                // Ganti dengan link grup WhatsApp Anda
-                const whatsappGroupLink = "https://chat.whatsapp.com/C6axgyfeZeF9x1t7Ra95OB";
-                btnWa.href = `${whatsappGroupLink}?text=${encodedMessage}`;
-            }
-
-            // Update Telegram link
-            function updateTelegramLink(message) {
-                const encodedMessage = encodeURIComponent(message);
-                // Ganti dengan link grup Telegram Anda
-                const telegramGroupLink = "https://t.me/yourgroup";
-                btnTelegram.href = `https://t.me/share/url?url=${telegramGroupLink}&text=${encodedMessage}`;
-            }
-
-            // Default aktifkan form masuk
-            btnMasuk.click();
-
-            // Add animation to form sections when they become visible
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-in');
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            observer.observe(formMasuk);
-            observer.observe(formLibur);
-            observer.observe(hasilPesan);
-        });
+        // Redirect to main page after 3 seconds
+        setTimeout(function() {
+            window.location.href = "generateMsg.html";
+        }, 3000);
     </script>
 </body>
-
 </html>
